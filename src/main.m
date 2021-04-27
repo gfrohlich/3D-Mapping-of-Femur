@@ -17,12 +17,12 @@ controlPoints = [
 %% Image Selection
 
 filenames = {
-    'PointSelectionTableLeft15.csv',
-    'PointSelectionTableLeft30.csv',
-    'PointSelectionTableLeft45.csv',
-    'PointSelectionTableRight15.csv',
-    'PointSelectionTableRight30.csv',
-    'PointSelectionTableRight45.csv',
+    '2D-Data/PointSelectionTableLeft15.csv',
+    '2D-Data/PointSelectionTableLeft30.csv',
+    '2D-Data/PointSelectionTableLeft45.csv',
+    '2D-Data/PointSelectionTableRight15.csv',
+    '2D-Data/PointSelectionTableRight30.csv',
+    '2D-Data/PointSelectionTableRight45.csv',
     };
 
 fprintf('Select 2 images to create the 3D map.\n');
