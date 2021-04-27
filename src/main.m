@@ -61,16 +61,24 @@ for i = 1 : numControlPoints
     ];
 end
 
+%% Error Calculations
+
+controlPointsErrors = (controlPointsComputed - controlPoints) ./ controlPoints * 100;
+
 %% Test Plot Screws in 3D
 
 x = controlPointsComputed(:,1);
 y = controlPointsComputed(:,2);
 z = controlPointsComputed(:,3);
 
+xe = controlPointsErrors(:,1);
+ye = controlPointsErrors(:,2);
+ze = controlPointsErrors(:,3);
+
 for i = 1:numControlPoints
-plot3([x(i) x(i)], [y(i) y(i)], [0 z(i)]);
-text(x(i), y(i), z(i),sprintf('M%i',i));
-hold on
+    plot3([x(i) x(i)], [y(i) y(i)], [0 z(i)]);
+    text(x(i), y(i), z(i),sprintf('M%i (%+.2f, %+.2f, %+.2f) %%', i, xe(i), ye(i), ze(i)));
+    hold on
 end
 
 title('Screws Computed')
