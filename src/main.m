@@ -23,6 +23,8 @@ filenames = {
     '2D-Data/PointSelectionTableRight15.csv',
     '2D-Data/PointSelectionTableRight30.csv',
     '2D-Data/PointSelectionTableRight45.csv',
+    '2D-Data/PointSelectionTableCustom1.csv',
+    '2D-Data/PointSelectionTableCustom2.csv'
     };
 
 fprintf('Select 2 images to create the 3D map.\n');
