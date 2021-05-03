@@ -16,23 +16,38 @@ controlPoints = [
 
 %% Image Selection
 
-filenames = {
-    '2D-Data/ControlPointsLeft15.csv',
-    '2D-Data/ControlPointsLeft30.csv',
-    '2D-Data/ControlPointsLeft45.csv',
-    '2D-Data/ControlPointsRight15.csv',
-    '2D-Data/ControlPointsRight30.csv',
-    '2D-Data/ControlPointsRight45.csv',
-    '2D-Data/ControlPointsCustom1.csv',
-    '2D-Data/ControlPointsCustom2.csv'
-    };
-
-fprintf('Select 2 images to create the 3D map.\n');
-for i = 1:length(filenames)
-    fprintf('  %i. %s\n', i, filenames{i});
+fprintf('Would you like to use the provided images or the custom images?\n');
+fprintf('  1. Provided images\n');
+fprintf('  2. Custom images\n');
+groupSelection = input('Selection: ');
+switch groupSelection
+    case 1 
+        imageNames = {
+            'Left15'
+            'Left30'
+            'Left45'
+            'Right15'
+            'Right30'
+            'Right45'
+            };
+    case 2
+        imageNames = {
+            'Custom1'
+            'Custom2'
+            };
+    otherwise
+        error('Invalid image group.');
 end
-fileSelection1 = input('Selection 1: ');
-fileSelection2 = input('Selection 2: ');
+
+fprintf('Which combination of images would you like to use?');
+for i = 1:length(imageNames)
+    fprintf('  %i. %s\n', i, imageNames{i});
+end
+imageSelections = eval(['[' input('Selections:', 's') ']']);
+
+%nchoosek
+
+%% Read Image Control Points
 
 imagePointsTable1 = readtable(filenames{fileSelection1});
 imagePoints1 = [imagePointsTable1.X, imagePointsTable1.Y];
