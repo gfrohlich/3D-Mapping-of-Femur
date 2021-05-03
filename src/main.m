@@ -17,14 +17,14 @@ controlPoints = [
 %% Image Selection
 
 filenames = {
-    '2D-Data/PointSelectionTableLeft15.csv',
-    '2D-Data/PointSelectionTableLeft30.csv',
-    '2D-Data/PointSelectionTableLeft45.csv',
-    '2D-Data/PointSelectionTableRight15.csv',
-    '2D-Data/PointSelectionTableRight30.csv',
-    '2D-Data/PointSelectionTableRight45.csv',
-    '2D-Data/PointSelectionTableCustom1.csv',
-    '2D-Data/PointSelectionTableCustom2.csv'
+    '2D-Data/ControlPointsLeft15.csv',
+    '2D-Data/ControlPointsLeft30.csv',
+    '2D-Data/ControlPointsLeft45.csv',
+    '2D-Data/ControlPointsRight15.csv',
+    '2D-Data/ControlPointsRight30.csv',
+    '2D-Data/ControlPointsRight45.csv',
+    '2D-Data/ControlPointsCustom1.csv',
+    '2D-Data/ControlPointsCustom2.csv'
     };
 
 fprintf('Select 2 images to create the 3D map.\n');
@@ -46,7 +46,7 @@ a1 = computeCameraParams(controlPoints, imagePoints1);
 
 a2 = computeCameraParams(controlPoints, imagePoints2);
 
-%% Compute 3D Points
+%% Compute 3D Control Points
 
 cameraParams = [a1 a2];
 
