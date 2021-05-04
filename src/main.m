@@ -123,4 +123,23 @@ end
 
 %% Plot Bone Surface in 3D
 
-% TODO
+x = bonePointsComputed(:,1);
+y = bonePointsComputed(:,2);
+z = bonePointsComputed(:,3);
+
+nrows = 17;
+ncols = 19;
+
+% Construct triangulation connectivity matrix (tetrahedral)
+T = [];
+for i = 1 : (nrows-1)*(ncols-1)
+    vertices = [i, i+1, i+nrows, i+nrows+1];
+    if any(isnan(x(vertices)))
+        % skip tetrahedron
+    else
+        T = [T; vertices];
+    end
+end
+
+trisurf(T, x, y, z);
+
