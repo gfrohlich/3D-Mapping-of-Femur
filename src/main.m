@@ -65,7 +65,7 @@ for i = 1:numCameras
     a{i} = computeCameraParams(controlPointsKnown, controlPoints{i});
 end
 
-%% Compute Control Points
+numBonePoints = length(bonePoints{1});
 
 % Combine camera param vectors (a) into matrix (A)
 A = [];
@@ -73,7 +73,8 @@ for i = 1:numCameras
     A = [A, a{i}];
 end
 
-% Compute each control point individually
+%% Compute Control Points
+
 controlPointsComputed = [];
 for i = 1:numControlPoints
     controlPointPoints = [];
@@ -87,7 +88,7 @@ end
 
 controlPointsErrors = (controlPointsComputed - controlPointsKnown) ./ controlPointsKnown * 100;
 
-%% Test Plot Screws in 3D
+%% Plot Screws in 3D
 
 x = controlPointsComputed(:,1);
 y = controlPointsComputed(:,2);
@@ -108,3 +109,18 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 grid on
+
+%% Compute Bone Surface Points
+
+bonePointsComputed = [];
+for i = 1:numBonePoints
+    bonePointPoints = [];
+    for j = 1:numCameras
+        bonePointPoints = [bonePointPoints; bonePoints{j}(i,:)];
+    end
+    bonePointsComputed = [bonePointsComputed; compute3DPoint(A, bonePointPoints)];
+end
+
+%% Plot Bone Surface in 3D
+
+% TODO
