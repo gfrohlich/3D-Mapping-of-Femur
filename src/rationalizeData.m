@@ -1,12 +1,14 @@
 clear; clc;
 
 filenames = {
-    '2D-Data/PointsOnBoneLeft45.csv',
-    '2D-Data/PointsOnBoneLeft30.csv',
-    '2D-Data/PointsOnBoneLeft15.csv',
-    '2D-Data/PointsOnBoneRight15.csv',
-    '2D-Data/PointsOnBoneRight30.csv',
-    '2D-Data/PointsOnBoneRight45.csv',
+    '2D-Data/BonePointsLeft45.csv',
+    '2D-Data/BonePointsLeft30.csv',
+    '2D-Data/BonePointsLeft15.csv',
+    '2D-Data/BonePointsRight15.csv',
+    '2D-Data/BonePointsRight30.csv',
+    '2D-Data/BonePointsRight45.csv',
+    '2D-Data/BonePointsCustom1.csv',
+    '2D-Data/BonePointsCustom2.csv'
     };
 
 for i = 1:length(filenames)
