@@ -28,7 +28,7 @@ end
 
 x = B\d;
 
-point = x;
+point = x';
 
 end
 

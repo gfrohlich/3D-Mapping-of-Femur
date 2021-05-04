@@ -1,7 +1,9 @@
+
 close all; clear; clc;
+
 %% Define Control Points
 
-controlPoints = [
+controlPointsKnown = [
     3.49,  3.92, 5.43;
     8.49,  3.90, 5.82;
     4.48,  5.32, 5.96;
@@ -12,7 +14,7 @@ controlPoints = [
     8.58, 11.56, 6.76;
 ];
 
-[numControlPoints,~] = size(controlPoints);
+[numControlPoints,~] = size(controlPointsKnown);
 
 %% Image Selection
 
@@ -39,48 +41,51 @@ switch groupSelection
         error('Invalid image group.');
 end
 
-fprintf('Which combination of images would you like to use?');
+fprintf('Which combination of images would you like to use?\n');
 for i = 1:length(imageNames)
     fprintf('  %i. %s\n', i, imageNames{i});
 end
-imageSelections = eval(['[' input('Selections:', 's') ']']);
+imageSelections = eval(['[' input('Selections: ', 's') ']']);
+numCameras = length(imageSelections);
 
-%nchoosek
+%% Read Image Data
 
-%% Read Image Control Points
+controlPoints = {};
+bonePoints    = {};
+a = {};
 
-imagePointsTable1 = readtable(filenames{fileSelection1});
-imagePoints1 = [imagePointsTable1.X, imagePointsTable1.Y];
+for i = 1:numCameras
+    % Read image points
+    imageName = imageNames{imageSelections(i)};
+    controlPointsTable = readtable(['2D-Data/ControlPoints', imageName, '.csv']);
+    bonePointsTable    = readtable(['2D-Data/BonePoints',    imageName, '.csv']);
+    controlPoints{i} = [controlPointsTable.X, controlPointsTable.Y];
+    bonePoints{i}    = [bonePointsTable.X,    bonePointsTable.Y];
+    % Compute camera params
+    a{i} = computeCameraParams(controlPointsKnown, controlPoints{i});
+end
 
-imagePointsTable2 = readtable(filenames{fileSelection2});
-imagePoints2 = [imagePointsTable2.X, imagePointsTable2.Y];
+%% Compute Control Points
 
-%% Compute Camera Parameters
+% Combine camera param vectors (a) into matrix (A)
+A = [];
+for i = 1:numCameras
+    A = [A, a{i}];
+end
 
-a1 = computeCameraParams(controlPoints, imagePoints1);
-
-a2 = computeCameraParams(controlPoints, imagePoints2);
-
-%% Compute 3D Control Points
-
-cameraParams = [a1 a2];
-
+% Compute each control point individually
 controlPointsComputed = [];
-
-for i = 1 : numControlPoints
-    imagePoints = [
-      imagePoints1(i,:);
-      imagePoints2(i,:);
-    ];
-    controlPointsComputed = [
-        controlPointsComputed;
-        compute3DPoint(cameraParams, imagePoints)';
-    ];
+for i = 1:numControlPoints
+    controlPointPoints = [];
+    for j = 1:numCameras
+        controlPointPoints = [controlPointPoints; controlPoints{j}(i,:)];
+    end
+    controlPointsComputed = [controlPointsComputed; compute3DPoint(A, controlPointPoints)];
 end
 
 %% Error Calculations
 
-controlPointsErrors = (controlPointsComputed - controlPoints) ./ controlPoints * 100;
+controlPointsErrors = (controlPointsComputed - controlPointsKnown) ./ controlPointsKnown * 100;
 
 %% Test Plot Screws in 3D
 
