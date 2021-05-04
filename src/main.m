@@ -32,11 +32,17 @@ switch groupSelection
             'Right30'
             'Right45'
             };
+        nrows = 17;
+        ncols = 19;
+        
     case 2
         imageNames = {
             'Custom1'
             'Custom2'
-            };
+            }; 
+        nrows = 20;
+        ncols = 23;
+
     otherwise
         error('Invalid image group.');
 end
@@ -126,9 +132,6 @@ end
 x = bonePointsComputed(:,1);
 y = bonePointsComputed(:,2);
 z = bonePointsComputed(:,3);
-
-nrows = 17;
-ncols = 19;
 
 % Construct triangulation connectivity matrix (tetrahedral)
 T = [];
