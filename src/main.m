@@ -110,7 +110,7 @@ for i = 1:numControlPoints
     hold on
 end
 
-title('Screws Computed')
+title('3D Surface Points')
 xlabel('x')
 ylabel('y')
 zlabel('z')
