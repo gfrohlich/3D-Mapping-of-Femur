@@ -1,6 +1,8 @@
 
 close all; clear; clc;
 
+format shortG;
+
 %% Define Control Points
 
 controlPointsKnown = [
@@ -47,7 +49,7 @@ switch groupSelection
         error('Invalid image group.');
 end
 
-fprintf('Which combination of images would you like to use?\n');
+fprintf('\nWhich combination of images would you like to use?\n');
 for i = 1:length(imageNames)
     fprintf('  %i. %s\n', i, imageNames{i});
 end
@@ -79,6 +81,9 @@ for i = 1:numCameras
     A = [A, a{i}];
 end
 
+fprintf('\nCanera parameters:\n');
+disp(A);
+
 %% Compute Control Points
 
 controlPointsComputed = [];
@@ -93,6 +98,9 @@ end
 %% Error Calculations
 
 controlPointsErrors = (controlPointsComputed - controlPointsKnown) ./ controlPointsKnown * 100;
+
+fprintf('Error values (%%):\n');
+disp(controlPointsErrors);
 
 %% Plot Screws in 3D
 
